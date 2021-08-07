@@ -1,23 +1,15 @@
-import logo from './logo.svg';
+import Search from './Compontents/Search/search.component';
+import Navigation from './Compontents/Navigation/Navigation.component';
+import PhotoContainer from './Compontents/Gallery/PhotoContainer.component';
+
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Search />
+      <Navigation />
+      <PhotoContainer />
     </div>
   );
 }

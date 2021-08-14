@@ -1,18 +1,21 @@
 import { Component } from 'react';
 
+//Router
+import { NavLink } from 'react-router-dom';
+
 export default class Navigation extends Component {
   render() {
     return (
       <nav className="main-nav">
         <ul>
           <li>
-            <a href="#">Cats</a>
+            <NavLink to="/galaxy">Galaxy</NavLink>
           </li>
           <li>
-            <a href="#">Dogs</a>
+            <NavLink to="/cars">Cars</NavLink>
           </li>
           <li>
-            <a href="#">Computers</a>
+            <NavLink to="/nature">Nature</NavLink>
           </li>
         </ul>
       </nav>

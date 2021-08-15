@@ -2,6 +2,8 @@ import React from 'react';
 
 import Photo from './Photo.component';
 
+import LoaderImg from '../../assets/loader.gif';
+
 export default function PhotoContainer({ photos, isLoading, query }) {
   let photosToDisplay;
 
@@ -18,6 +20,8 @@ export default function PhotoContainer({ photos, isLoading, query }) {
         />
       );
     });
+  } else {
+    return (photosToDisplay = <img src={LoaderImg} width="100px" alt="Content is Loading"></img>);
   }
 
   return (

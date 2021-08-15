@@ -10,7 +10,7 @@ import axios from 'axios';
 import apiKey from './config';
 
 //App components
-import Search from './components/Search/search.component';
+import Search from './components/Search/Search.component';
 import Navigation from './components/Navigation/Navigation.component';
 import PhotoContainer from './components/Gallery/PhotoContainer.component';
 import NoResultsFound from './components/Gallery/NoResultsFound.component';
@@ -20,7 +20,7 @@ import './App.css';
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { galaxy: [], waterfall: [], nature: [], searchedPhotos: [], isLoading: true };
+    this.state = { galaxy: [], cars: [], nature: [], searchedPhotos: [], query: '', isLoading: true };
   }
 
   //Get photos when the App component mounts
@@ -41,21 +41,36 @@ export default class App extends Component {
       )
       .then(res => {
         const photos = res.data.photos.photo;
-        this.setState({
-          [query]: photos,
-          isLoading: false,
-        });
+
+        if (query === 'galaxy' || query === 'cars' || query === 'nature') {
+          this.setState({
+            [query]: photos,
+            isLoading: false,
+          });
+        } else {
+          this.setState({
+            searchedPhotos: photos,
+            isLoading: false,
+          });
+        }
       })
       .catch(err => {
         console.log(`An error has occured: ${err}`);
       });
   }
 
+  searchQueryHandler(query) {
+    this.setState({
+      query,
+    });
+    this.getData(query);
+  }
+
   render() {
     return (
       <Router>
         <div className="container">
-          <Search />
+          <Search onSubmit={query => this.searchQueryHandler(query)} />
           <Navigation />
           <Switch>
             <Route exact path="/" render={() => <Redirect to="/galaxy" />} />
@@ -80,7 +95,18 @@ export default class App extends Component {
                 <PhotoContainer photos={this.state.nature} isLoading={this.state.isLoading} query="Nature" />
               )}
             />
-            <NoResultsFound />
+            <Route
+              exact
+              path={`/search/${this.state.query}`}
+              render={() => (
+                <PhotoContainer
+                  photos={this.state.searchedPhotos}
+                  isLoading={this.state.isLoading}
+                  query={this.state.query}
+                />
+              )}
+            />
+            <Route component={NoResultsFound} />
           </Switch>
         </div>
       </Router>

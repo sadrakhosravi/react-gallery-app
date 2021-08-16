@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom'; //Used for browser history
 
 class Search extends Component {
   constructor(props) {
@@ -11,12 +11,20 @@ class Search extends Component {
     };
   }
 
+  /**
+   * Send the searchQuery state to the onSubmit callback function for App.js to uuse and adds the query to the browsers URL
+   * @param {Object} e - event object
+   */
   handleSubmit(e) {
     e.preventDefault();
     this.props.onSubmit(this.state.searchQuery);
     this.props.history.push(`/search/${this.state.searchQuery}`);
   }
 
+  /**
+   * Sets the seach query state based on the input value
+   * @param {Object} e - event object
+   */
   handleInputChange(e) {
     this.setState({ searchQuery: e.target.value });
   }

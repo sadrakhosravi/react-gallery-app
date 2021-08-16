@@ -3,6 +3,7 @@ import { Component } from 'react';
 //Router
 import { NavLink } from 'react-router-dom';
 
+//Displays three main categories as navigation
 export default class Navigation extends Component {
   render() {
     return (

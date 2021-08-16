@@ -3,13 +3,13 @@ import { Component } from 'react';
 //Router
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
-//Axios
+//Axios for API requests
 import axios from 'axios';
 
 //Api Key
 import apiKey from './config';
 
-//App components
+//Components
 import Search from './components/Search/Search.component';
 import Navigation from './components/Navigation/Navigation.component';
 import PhotoContainer from './components/Gallery/PhotoContainer.component';
@@ -32,9 +32,10 @@ export default class App extends Component {
 
   /**
    *  Performs a API request to flicker and retrieves data based on the query given.
-   * @param {String} query - the query for Flicker API tags
+   * @param {String} query - the query string for API calls
    */
   getData(query) {
+    this.setState({ isLoading: true });
     axios
       .get(
         `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`,
@@ -59,6 +60,11 @@ export default class App extends Component {
       });
   }
 
+  /**
+   * A callback function used for getting the data from Search component and calling getData
+   * to get the queried photos
+   * @param {String} query - Searched query string
+   */
   searchQueryHandler(query) {
     this.setState({
       query,

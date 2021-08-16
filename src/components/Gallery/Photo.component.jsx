@@ -1,5 +1,6 @@
 import React from 'react';
 
+//Uses props to render the given flicker image
 export default function Photo(props) {
   return (
     <li>

@@ -1,6 +1,6 @@
 # React Flicker Gallery App
 
-A gallery app that fetches images from the Flciker's API and displays them based on tags. There are 3 main tags "Galaxy", "Cars", and "Nature" available as links to navigate and a search field to search for your desired image tag. 
+A gallery app that fetches images from the Flicker's API and displays them based on tags. There are 3 main tags "Galaxy", "Cars", and "Nature" available as links to navigate and a search field to search for your desired image tag. 
 
 ## Available Scripts
 

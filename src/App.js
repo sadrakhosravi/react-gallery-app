@@ -10,7 +10,7 @@ import axios from 'axios';
 import apiKey from './config';
 
 //Components
-import Search from './components/Search/Search.component';
+import Search from './components/Search.old/Search.component';
 import Navigation from './components/Navigation/Navigation.component';
 import PhotoContainer from './components/Gallery/PhotoContainer.component';
 import NoResultsFound from './components/Gallery/NoResultsFound.component';

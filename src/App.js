@@ -17,10 +17,31 @@ import NoResultsFound from './components/Gallery/NoResultsFound.component';
 
 import './App.css';
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { galaxy: [], cars: [], nature: [], searchedPhotos: [], query: '', isLoading: true };
+    this.state = {
+      galaxy: [],
+      cars: [],
+      nature: [],
+      searchedPhotos: [],
+      query: '',
+      isLoading: true,
+      noResults: false,
+    };
+  }
+
+  checkSearchURL() {
+    // Get the url pathname and perform a get data if the url matched /search/
+    const searchURL = window.location.pathname.match('/search/');
+
+    if (searchURL) {
+      const sQuery = searchURL.input.split('/search/');
+      this.setState({
+        query: sQuery[1],
+      });
+      this.getData(sQuery[1]);
+    }
   }
 
   //Get photos when the App component mounts
@@ -28,8 +49,13 @@ export default class App extends Component {
     this.getData('galaxy');
     this.getData('cars');
     this.getData('nature');
-  }
+    this.checkSearchURL();
 
+    //Detect browser back and forward button
+    window.addEventListener('popstate', event => {
+      this.checkSearchURL();
+    });
+  }
   /**
    *  Performs a API request to flicker and retrieves data based on the query given.
    * @param {String} query - the query string for API calls
@@ -53,6 +79,17 @@ export default class App extends Component {
             searchedPhotos: photos,
             isLoading: false,
           });
+
+          //If no photos returned, set noResults state to true
+          if (this.state.searchedPhotos.length === 0) {
+            this.setState({
+              noResults: true,
+            });
+          } else {
+            this.setState({
+              noResults: false,
+            });
+          }
         }
       })
       .catch(err => {
@@ -76,7 +113,7 @@ export default class App extends Component {
     return (
       <Router>
         <div className="container">
-          <Search onSubmit={query => this.searchQueryHandler(query)} />
+          <Search searchQuery={this.state.query} onSubmit={query => this.searchQueryHandler(query)} />
           <Navigation />
           <Switch>
             <Route exact path="/" render={() => <Redirect to="/galaxy" />} />
@@ -102,16 +139,17 @@ export default class App extends Component {
               )}
             />
             <Route
-              exact
               path={`/search/${this.state.query}`}
               render={() => (
                 <PhotoContainer
                   photos={this.state.searchedPhotos}
                   isLoading={this.state.isLoading}
                   query={this.state.query}
+                  noResults={this.state.noResults}
                 />
               )}
             />
+
             <Route component={NoResultsFound} />
           </Switch>
         </div>
@@ -119,3 +157,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default App;

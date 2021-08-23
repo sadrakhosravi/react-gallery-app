@@ -1,10 +1,13 @@
 import React from 'react';
 
 import Photo from './Photo.component';
+import NoResultsFound from './NoResultsFound.component';
 
 import LoaderImg from '../../assets/loader.gif';
 
-export default function PhotoContainer({ photos, isLoading, query }) {
+export default function PhotoContainer(props) {
+  const { photos, isLoading, query, noResults } = props;
+
   let photosToDisplay;
 
   //Check if data has loaded and the photos array is not empty
@@ -22,14 +25,16 @@ export default function PhotoContainer({ photos, isLoading, query }) {
         />
       );
     });
-  } else {
+  } else if (!noResults) {
     //Return a spinner gif for loading state
     return (photosToDisplay = <img src={LoaderImg} width="100px" alt="Content is Loading"></img>);
+  } else {
+    photosToDisplay = <NoResultsFound />;
   }
 
   return (
     <div className="photo-container">
-      <h2>{query}</h2>
+      {!noResults && <h2>{query}</h2>}
       <ul>{photosToDisplay}</ul>
     </div>
   );

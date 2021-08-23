@@ -19,6 +19,7 @@ class Search extends Component {
     e.preventDefault();
     this.props.onSubmit(this.state.searchQuery);
     this.props.history.push(`/search/${this.state.searchQuery}`);
+    e.currentTarget.reset();
   }
 
   /**

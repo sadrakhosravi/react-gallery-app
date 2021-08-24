@@ -53,7 +53,7 @@ class App extends Component {
 
     //Detect browser back and forward button
     window.addEventListener('popstate', event => {
-      this.checkSearchURL();
+      this.checkSearchURL(); //Check if the URL contains search query. If so, make an API call.
     });
   }
   /**
@@ -61,7 +61,7 @@ class App extends Component {
    * @param {String} query - the query string for API calls
    */
   getData(query) {
-    this.setState({ isLoading: true });
+    this.setState({ isLoading: true, noResults: false });
     axios
       .get(
         `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`,

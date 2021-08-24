@@ -90,7 +90,20 @@ input {
 }
 
 .photo-container .not-found {
+  text-align: center;
   width: 100%;
+}
+
+.loader {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader img {
+  margin-top: 5rem;
+  width: 8rem !important;
 }
 
 @media only screen and (max-width: 767px) {
